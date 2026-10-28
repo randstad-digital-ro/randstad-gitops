@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: voip-service
+  labels:
+    app: voip-service
+spec:
+  to:
+    kind: Service
+    name: voip-service
+  port:
+    targetPort: 8080

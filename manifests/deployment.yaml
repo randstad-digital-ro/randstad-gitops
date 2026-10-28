@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voip-service
+  labels:
+    app: voip-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: voip-service
+  template:
+    metadata:
+      labels:
+        app: voip-service
+    spec:
+      # Tell OpenShift to use the secret we will create in Step 2
+      imagePullSecrets:
+      - name: ghcr-pull-secret
+      containers:
+      - name: voip-service
+        image: ghcr.io/randstad-digital-ro/voip_app/voip-service:b47f859f87e0b9df33c4ddf9e8c53f784322d20e
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "384Mi"
+            cpu: "200m"
+          limits:
+            memory: "768Mi"
+            cpu: "1000m"
